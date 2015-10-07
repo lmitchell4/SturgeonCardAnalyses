@@ -48,6 +48,11 @@ QuerySqlServerDb(queries = stu_angler_query_list["PurchasedCards"],
 
 # Data Analytics ----------------------------------------------------------
 
+head(PurchasedCards)
+
+nrow(PurchasedCards[PurchasedCards$StatusCodeID != 165, ])
+head(PurchasedCards[PurchasedCards$StatusCodeID != 165, ])
+
 AnglerAvidity <- GetAvidityData(card_data = PurchasedCards, only_avid = TRUE)
 
 # result should be 0
