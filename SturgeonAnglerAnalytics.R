@@ -77,11 +77,22 @@ nrow(AnglerAvidity[AnglerAvidity$IsAvid == "yes" &
 # contact information for all anglers and then randomly choosing from that list!
 # Might reconfigure this soon (J. DuBois 06-Oct-2015)
 
-n_records <- length(AnglerAvidity$CustomerID)
+# prior to below will also need to subset AnglerAvidity dataframe to remove
+# anglers where nYearsNotRet = 0; no point in calling these folks since they've
+# returned their Cards
 
+n_records <- length(AnglerAvidity$CustomerID)
+sample_size <- 1000 # change as desired, but not to exceed 30K
+
+# get random numers (row numbers) for subsetting AnglerAvidity CustomerID
+random_row_nums <- sample.int(n = n_records, size = sample_size)
+
+# query below errored when number of records exceeded ~30K; because we want a
+# random sample of anglers, the thinking now is to perform the random sample AND
+# THEN query the database for angler name, contact info of the randomly sampled
+# CustomerIDs (J. DuBois 07-Oct-2015)
 stu_angler_query_list$AvidCustomers <- ReadSqlFileParam(
-  # run 1:30000 then run 30001:n_records
-  param = "@cust", value = AnglerAvidity$CustomerID[30001:n_records],
+  param = "@cust", value = AnglerAvidity$CustomerID[random_row_nums],
   sql_file = "CardCustomers.sql")
 
 # using listname["item"] preserves list name needed for function below
@@ -89,16 +100,8 @@ QuerySqlServerDb(queries = stu_angler_query_list["AvidCustomers"],
                  server_name = "74.120.125.240",
                  database = "CA", trusted = FALSE)
 
-# create temp dataframe to hold first round of querying; run only after 1:30K
-# records have been outputed to AvidCustomers
-temp_avid <- AvidCustomers
-
-# rbind temp to send round (query) of AvidCustomers; run only after 30001: to
-# end records have been outputed to AvidCustomers
-AvidCustomers <- rbind(temp_avid, AvidCustomers)
-
 # clean up
-rm(temp_avid)
+rm(random_row_nums, n_records, sample_size)
 
 # below merges both dataframes and then from the merged dataframe outputs a
 # random selection of records from which the phone survey can be conducted; this
@@ -111,16 +114,12 @@ AnglerAvidity <- within(data = AnglerAvidity, expr = {
   CustomerID <- as.numeric(as.character(CustomerID))
 })
 
+# create angler call list - may output to Excel or .csv file for convenience
 AnglerCallList <- merge(x = AvidCustomers, y = AnglerAvidity,
-                        by = "CustomerID", all = TRUE)
+                        by = "CustomerID", all = FALSE)
 
 # if TRUE, OK, otherwise remove records of deceased
 all(is.na(AnglerCallList$DeceasedDate))
 
 # clean up
-rm(AnglerAvidity, AvidCustomers, n_records)
-
-# get random sample of the 33K+ anglers; might output list to Excel or .csv file
-# for ease of distrubution and calling
-GetRandomRecords(dtfrm = AnglerCallList, sample_size = 5)
-
+rm(AnglerAvidity, AvidCustomers)
