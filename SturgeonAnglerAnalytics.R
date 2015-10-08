@@ -50,10 +50,20 @@ QuerySqlServerDb(queries = stu_angler_query_list["PurchasedCards"],
 
 head(PurchasedCards)
 
-nrow(PurchasedCards[PurchasedCards$StatusCodeID != 165, ])
-head(PurchasedCards[PurchasedCards$StatusCodeID != 165, ])
+# Some anglers have > 1 Card per ItemYear, but only 1 is Active, all other are
+# Inactive
+nrow(PurchasedCards[PurchasedCards$StatusCodeDesc != "Active", ])
+head(PurchasedCards[PurchasedCards$StatusCodeDesc != "Active", ])
 
-AnglerAvidity <- GetAvidityData(card_data = PurchasedCards, only_avid = TRUE)
+# Status description by ItemYear
+with(data = PurchasedCards, expr = {
+  table(ItemYear, StatusCodeDesc, useNA = "ifany")
+}) 
+
+# Get Avidity data only on Active Cards
+AnglerAvidity <- GetAvidityData(
+  card_data = PurchasedCards[PurchasedCards$StatusCodeDesc == "Active", ],
+  only_avid = TRUE)
 
 # result should be 0
 length(unique(AnglerAvidity$CustomerID)) - length(AnglerAvidity$CustomerID)
@@ -65,6 +75,21 @@ table(AnglerAvidity$IsAvid)
 nrow(AnglerAvidity[AnglerAvidity$IsAvid == "yes" &
                      AnglerAvidity$nYearsNotRet > 0 &
                      AnglerAvidity$YearsNotRet != "2015", ])
+
+# checking where angler purchased > 1 Card in a calendar year
+with(data = AnglerAvidity, expr = {
+  cbind(table(YearsPurch, useNA = "ifany"))
+})
+
+AnglerAvidity[AnglerAvidity$YearsPurch == "2013,2013,2014,2015", ]
+AnglerAvidity[AnglerAvidity$YearsPurch == "2014,2014,2015", ]
+AnglerAvidity[AnglerAvidity$YearsPurch == "2013,2013,2014", ]
+AnglerAvidity[AnglerAvidity$YearsPurch == "2013,2014,2014,2015", ]
+AnglerAvidity[AnglerAvidity$nYearsNotRet > 3, ]
+
+with(data = AnglerAvidity, expr = {
+  cbind(table(nYearsNotRet, useNA = "ifany"))
+})
 
 # Get customer names contact ----------------------------------------------
 
@@ -85,8 +110,9 @@ nrow(AnglerAvidity[AnglerAvidity$IsAvid == "yes" &
 # prior to below will also need to subset AnglerAvidity dataframe to remove
 # anglers where nYearsNotRet = 0; no point in calling these folks since they've
 # returned their Cards
+AnglerAvidity <- AnglerAvidity[AnglerAvidity$nYearsNotRet != 0, ]
 
-n_records <- length(AnglerAvidity$CustomerID)
+n_records <- nrow(AnglerAvidity)
 sample_size <- 1000 # change as desired, but not to exceed 30K
 
 # get random numers (row numbers) for subsetting AnglerAvidity CustomerID
