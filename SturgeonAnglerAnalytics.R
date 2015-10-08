@@ -91,6 +91,9 @@ with(data = AnglerAvidity, expr = {
   cbind(table(nYearsNotRet, useNA = "ifany"))
 })
 
+# CustomerIDs from above - can run through query - if needed
+c_id <- c(3746815, 4038267, 632559, 1123505, 3755746, 3930485)
+
 # Get customer names contact ----------------------------------------------
 
 # add to query list the parameter query to get customer names contact based on
