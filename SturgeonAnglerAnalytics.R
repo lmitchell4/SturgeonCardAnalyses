@@ -81,10 +81,10 @@ with(data = AnglerAvidity, expr = {
   cbind(table(YearsPurch, useNA = "ifany"))
 })
 
-AnglerAvidity[AnglerAvidity$YearsPurch == "2013,2013,2014,2015", ]
-AnglerAvidity[AnglerAvidity$YearsPurch == "2014,2014,2015", ]
-AnglerAvidity[AnglerAvidity$YearsPurch == "2013,2013,2014", ]
-AnglerAvidity[AnglerAvidity$YearsPurch == "2013,2014,2014,2015", ]
+AnglerAvidity[AnglerAvidity$YearsPurch == "2013;2013;2014;2015", ]
+AnglerAvidity[AnglerAvidity$YearsPurch == "2014;2014;2015", ]
+AnglerAvidity[AnglerAvidity$YearsPurch == "2013;2013;2014", ]
+AnglerAvidity[AnglerAvidity$YearsPurch == "2013;2014;2014;2015", ]
 AnglerAvidity[AnglerAvidity$nYearsNotRet > 3, ]
 
 with(data = AnglerAvidity, expr = {
@@ -110,10 +110,12 @@ c_id <- c(3746815, 4038267, 632559, 1123505, 3755746, 3930485)
 # contact information for all anglers and then randomly choosing from that list!
 # Might reconfigure this soon (J. DuBois 06-Oct-2015)
 
-# prior to below will also need to subset AnglerAvidity dataframe to remove
-# anglers where nYearsNotRet = 0; no point in calling these folks since they've
-# returned their Cards
-AnglerAvidity <- AnglerAvidity[AnglerAvidity$nYearsNotRet != 0, ]
+# prior to below will also need to subset AnglerAvidity dataframe to remove 
+# anglers where nYearsNotRet = 0; no point in calling these folks since they've 
+# returned their Cards; added (17-Nov-2015 - removal of anglers where only card
+# not returned is 2015 - as these Cards not due until 31-Jan-2016)
+AnglerAvidity <- AnglerAvidity[AnglerAvidity$nYearsNotRet != 0 &
+                                 AnglerAvidity$YearsNotRet != "2015", ]
 
 n_records <- nrow(AnglerAvidity)
 sample_size <- 1000 # change as desired, but not to exceed 30K
@@ -159,4 +161,5 @@ all(is.na(AnglerCallList$DeceasedDate))
 rm(AnglerAvidity, AvidCustomers)
 
 # create .csv of the call list
-write.csv(x = AnglerCallList, file = "AnglerCallList.csv", row.names = FALSE)
+write.csv(x = AnglerCallList, file = "angler_survey/AnglerCallList.csv",
+          row.names = FALSE)
