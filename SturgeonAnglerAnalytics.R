@@ -43,7 +43,7 @@ stu_angler_query_list <- list(
 
 # will prompt for user ID and password
 QuerySqlServerDb(queries = stu_angler_query_list["PurchasedCards"],
-                 server_name = "74.120.125.240",
+                 server_name = "aldsdata.ad.dfg.ca.gov", #"74.120.125.240",
                  database = "CA", trusted = FALSE)
 
 # Data Analytics ----------------------------------------------------------
@@ -131,7 +131,7 @@ stu_angler_query_list$AvidCustomers <- ReadSqlFileParam(
 
 # using listname["item"] preserves list name needed for function below
 QuerySqlServerDb(queries = stu_angler_query_list["AvidCustomers"],
-                 server_name = "74.120.125.240",
+                 server_name = "aldsdata.ad.dfg.ca.gov", #74.120.125.240",
                  database = "CA", trusted = FALSE)
 
 # clean up
@@ -157,3 +157,6 @@ all(is.na(AnglerCallList$DeceasedDate))
 
 # clean up
 rm(AnglerAvidity, AvidCustomers)
+
+# create .csv of the call list
+write.csv(x = AnglerCallList, file = "AnglerCallList.csv", row.names = FALSE)
