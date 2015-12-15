@@ -6,6 +6,16 @@ Began: 05-Oct-2015
 
 This file creates a dataframe of all purchased sturgeon cards from desired years (e.g., 2013 to 2015). Anglers are classified as "avid" when an angler has purchased a sturgeon card in at least two consecutive years. Data are analyzed to show for which years anglers did not return to the Department his/her report card (non-reporting).
 
+
+
+
+
+
+
+
+
+
+
 Between 2013 and 2015 (to present 2015-12-15), 92,496 anglers purchased a Sturgeon Fishing Report Card (Card) in one, two, or all three years. Of these, 33,404 were deemed "avid." Of these avid anglers, 26,091 non-reported in either 2013 or 2014 or both. From the non-reported subset, we randomly selected 1,000 to survey (see code example below).
 
 
@@ -22,6 +32,7 @@ random_row_nums <- sample.int(n = n_records, size = sample_size)
 ```
 
 The AnglerAvidity dataframe is layed out as follows (example, with CustomerID and GOID removed):  
+
 
      CustomerID   GOID       IsAvid   YearsPurch       YearsNotRet       nYearsNotRet
 ---  -----------  ---------  -------  ---------------  ---------------  -------------
