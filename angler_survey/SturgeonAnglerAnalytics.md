@@ -34,13 +34,13 @@ random_row_nums <- sample.int(n = n_records, size = sample_size)
 The AnglerAvidity dataframe is layed out as follows (example, with CustomerID and GOID removed):  
 
 
-     CustomerID   GOID       IsAvid   YearsPurch       YearsNotRet       nYearsNotRet
----  -----------  ---------  -------  ---------------  ---------------  -------------
-2    X            xxxx-xxx   yes      2013;2014        2013;2014                    2
-5    X            xxxx-xxx   yes      2013;2014;2015   2013;2014;2015               3
-7    X            xxxx-xxx   yes      2013;2014;2015   2013;2014;2015               3
-10   X            xxxx-xxx   yes      2013;2014        2013;2014                    2
-11   X            xxxx-xxx   yes      2014;2015        2014;2015                    2
+|   |CustomerID |GOID     |IsAvid |YearsPurch     |YearsNotRet    | nYearsNotRet|
+|:--|:----------|:--------|:------|:--------------|:--------------|------------:|
+|2  |X          |xxxx-xxx |yes    |2013;2014      |2013;2014      |            2|
+|5  |X          |xxxx-xxx |yes    |2013;2014;2015 |2013;2014;2015 |            3|
+|7  |X          |xxxx-xxx |yes    |2013;2014;2015 |2013;2014;2015 |            3|
+|10 |X          |xxxx-xxx |yes    |2013;2014      |2013;2014      |            2|
+|11 |X          |xxxx-xxx |yes    |2014;2015      |2014;2015      |            2|
 
 
 
