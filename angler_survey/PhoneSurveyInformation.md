@@ -31,7 +31,7 @@ This algorithm (developed Dec 2015) uses Sturgeon Fishing Report Card (Card) dat
 
 The algorithm is described by the equation below. The ratio — described by  the number of anglers called and contacted who reported fishing for sturgeon divided by the number of anglers called and contacted — is the proportion of avid, non-reporting anglers called and contacted who reporting fishing for sturgeon (in this case, in either 2013, 2014, or both). These data are collected from the phone survey. From avid, non-reporting anglers called and contacted who reporting fishing for sturgeon, we can get (1) the average number of White Sturgeon harvested, (2) the average number of White Sturgeon released, and (3) the average number of Green Sturgeon released. Using the total avid non-reporting anglers, we get the number who went fishing by multiplying by the ratio (described above). This number is then multiplied by the average described above to get the modeled catch.
 
-$$catch = (AVNRF/AVNRCC) × AVNR × ANSH$$     
+$catch=(AVNRF/AVNRCC)×AVNR×ANSH$      
 
 where:  
   * AVNRCC  = Number of avid non-reporting anglers called and contacted  
