@@ -24,9 +24,6 @@ GetNonRepEst <- function(n_stu, N, n_survey) {
 }
 # end GetNonRepEst
 
-# test function
-#GetNonRepEst
-
 GetModeledCatch <- function(avnrcc, avnrf, avnr, ansh) {
   # This function calculates the modeled catch for sturgeon given inputs from 
   # phone survey; developed from Marty's algorithm (see "NewAlgorithm.xlsx")
@@ -52,7 +49,7 @@ GetModeledCatch <- function(avnrcc, avnrf, avnr, ansh) {
 # end GetModeledCatch
 
 # call function with arguments (an example)
-GetModeledCatch(avnrcc = 1000, avnrf = 500, avnr = 50000, ansh = 2)
+#GetModeledCatch(avnrcc = 1000, avnrf = 500, avnr = 50000, ansh = 2)
 
 
 
