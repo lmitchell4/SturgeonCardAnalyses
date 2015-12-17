@@ -1,5 +1,32 @@
 # 14-Dec-2015
 
+
+GetNonRepEst <- function(n_stu, N, n_survey) {
+  # This function calculates modeled harvest (or catch and release) for sturgeon
+  # given inputs from a phone survey. This function was developed by USFWS
+  # statisticians K. Newman and L. Mitchell (17-Dec-2015)
+  
+  # Args:
+  #   n_stu:    total number of sturgeon (either white or green) harvested (or
+  #             caught and released) by anglers called and contacted from
+  #             the phone survey
+  #   N:        total number of anglers per strata (e.g., avid & non-reporting)
+  #   n_survey: number of anglers called and contacted (talked to) from the
+  #             phone survey
+  
+  # Returns:
+  #   
+  
+  res <- (n_stu / n_survey) * N
+  
+  # function output
+  res
+}
+# end GetNonRepEst
+
+# test function
+#GetNonRepEst
+
 GetModeledCatch <- function(avnrcc, avnrf, avnr, ansh) {
   # This function calculates the modeled catch for sturgeon given inputs from 
   # phone survey; developed from Marty's algorithm (see "NewAlgorithm.xlsx")
