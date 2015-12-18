@@ -22,7 +22,7 @@ AS
 PhoneNum_CTE
 AS
 (
- SELECT dbo.Customer.CustomerID, FirstName, LastName, Gender,
+ SELECT dbo.Customer.CustomerID, FirstName, LastName, Gender, DateOfBirth,
    SecondaryPhoneID, PhoneNumber AS Phone1, EmailAddress, DeceasedDate
  FROM dbo.CustomerIndividual INNER JOIN (
    dbo.Phone INNER JOIN dbo.Customer ON 
@@ -43,7 +43,10 @@ AS
 -- containing both phone numbers and e-mail address
 SELECT CustomerID, FirstName, LastName,
   Gender, Phone1, PhoneNumber AS Phone2,
-  EmailAddress, DeceasedDate
+  EmailAddress, DeceasedDate,
+  -- added Age 18-Dec-2015
+  DATEDIFF(YEAR, DateOfBirth, GETDATE()) As Age --,
+  --DateOfBirth
 FROM CustId_CTE INNER JOIN (
     PhoneNum_CTE INNER JOIN dbo.Phone ON
     PhoneNum_CTE.SecondaryPhoneID = dbo.Phone.PhoneID
