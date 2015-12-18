@@ -11,13 +11,15 @@ GetCatchStats <- function(x) {
   range_x <- range(x)
   var_x <- var(x)
   mean_x <- mean(x)
+  sum_x <- sum(x)
   
   # put variables in list for convenience
   out_list <- list(
     Count = n_x,
     Range = range_x,
     Var = var_x,
-    Mean = mean_x
+    Mean = mean_x,
+    Total = sum_x
   )
   
   # function output
