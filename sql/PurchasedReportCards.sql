@@ -11,6 +11,9 @@
 -- makes for easier subsetting in R using 'Active' instead of trying
 -- to remember the code 165
 
+-- added name, gender, age, county, state 21-Dec-2015 for demo-
+-- graphics analytics
+
 -- declare parameter variables
 DECLARE @year1 AS Integer;
 DECLARE @year2 AS Integer;
@@ -39,9 +42,14 @@ AS
 )
 -- get all records from PurchasedCards_CTE (PurchasedCards_CTE.*)
 SELECT PurchasedCards_CTE.*, dbo.CustomerIdentity.IdentityValue,
-  dbo.CustomerIdentity.IdentityTypeID, dbo.CustomerIdentity.Status
-FROM PurchasedCards_CTE LEFT JOIN dbo.CustomerIdentity ON
-  PurchasedCards_CTE.CustomerID = dbo.CustomerIdentity.CustomerID
-WHERE IdentityTypeID = 1 AND Status = 1
-ORDER BY CustomerID  -- DateSubmitted DESC
+  dbo.CustomerIdentity.IdentityTypeID, dbo.CustomerIdentity.Status,
+  LastName, FirstName, Gender,
+  DATEDIFF(YEAR, DateOfBirth, GETDATE()) As Age,
+  Address_Physical_County, Address_Physical_State
+FROM PurchasedCards_CTE LEFT JOIN (dbo.CustomerIdentity LEFT JOIN 
+  dbo.adhoc_CustomerIndividual ON 
+    dbo.CustomerIdentity.CustomerID = dbo.adhoc_CustomerIndividual.CustomerID) ON
+      PurchasedCards_CTE.CustomerID = dbo.CustomerIdentity.CustomerID
+WHERE IdentityTypeID = 1 AND dbo.CustomerIdentity.Status = 1
+ORDER BY dbo.CustomerIdentity.CustomerID  -- DateSubmitted DESC
 ;
