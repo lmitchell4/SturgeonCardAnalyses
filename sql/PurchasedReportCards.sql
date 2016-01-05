@@ -27,6 +27,7 @@ AS
 (
   SELECT dbo.License.LicenseID, Quantity, dbo.License.ItemID, ItemYear,
   dbo.License.CustomerID, DocumentID, DateSubmitted, UserID,
+  dbo.LicenseReport.LicenseReportID,
   dbo.StatusCode.Description AS StatusCodeDesc
   --dbo.LicenseReport.LicenseReportTemplateID
   -- including ItemName, ItemNumber added +1 minute to the
