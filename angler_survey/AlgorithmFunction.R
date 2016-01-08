@@ -81,6 +81,21 @@ GetNonRepEst <- function(n_stu, N, n_survey) {
 }
 # end GetNonRepEst
 
+# function below developed by K. Newman (USFWS Mathematical Statistician
+# 12/2015)
+logn.ci <- function(theta,se.theta,alpha=0.05) {
+  logn.sigma <- se.theta/theta
+  z <- qnorm(1-alpha/2)
+  LB <- theta*exp(-z*logn.sigma)
+  UB <- theta*exp(z*logn.sigma)
+  Wald.LB <- theta-z*se.theta
+  Wald.UB <- theta+z*se.theta
+  out <- list(LB=LB,UB=UB,Wald.LB=Wald.LB,Wald.UB=Wald.UB)
+  return(out)
+}
+# end logn.ci
+
+
 GetModeledCatch <- function(avnrcc, avnrf, avnr, ansh) {
   # This function calculates the modeled catch for sturgeon given inputs from 
   # phone survey; developed from Marty's algorithm (see "NewAlgorithm.xlsx")
