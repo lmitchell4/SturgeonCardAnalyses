@@ -95,7 +95,6 @@ logn.ci <- function(theta,se.theta,alpha=0.05) {
 }
 # end logn.ci
 
-
 GetModeledCatch <- function(avnrcc, avnrf, avnr, ansh) {
   # This function calculates the modeled catch for sturgeon given inputs from 
   # phone survey; developed from Marty's algorithm (see "NewAlgorithm.xlsx")
