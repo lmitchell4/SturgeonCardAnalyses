@@ -45,13 +45,13 @@ CalcVarNonRepEst <- function(catch_var, N, n_survey = NULL) {
   # calculate the finite population correction (likely will be ~1, which is
   # default if n_survey is not supplied)
   finite_pop_corr <- if (!is.null(n_survey)) {
-    (N - n_survey) / N
+    (N - n_survey) / (N - 1)
   } else {
     1
   }
   
   # calculate variance for modeled estimate
-  var_modeled_est <- catch_var * finite_pop_corr * N^2
+  var_modeled_est <- (catch_var/n_survey) * finite_pop_corr * N^2
   
   # function output
   var_modeled_est
